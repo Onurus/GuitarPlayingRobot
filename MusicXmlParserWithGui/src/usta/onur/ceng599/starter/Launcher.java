@@ -11,8 +11,7 @@ public class Launcher {
 			@Override
 			public void run() {
 				Singleton.initialize();
-				Singleton.gprView.setVisible(true);
-				Singleton.gprController.initialize();
+
 			}
 		});
 

@@ -4,31 +4,28 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-import javax.sound.midi.Sequencer;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 
-import org.jfugue.MidiRenderer;
-import org.jfugue.MusicStringParser;
 import org.jfugue.Pattern;
 import org.jfugue.Player;
 
 import usta.onur.ceng599.starter.Singleton;
 
 public class GPRController {
+
 	static String unzipDir = "./unzippedXml";
+
 	public void initialize() {
 		Singleton.gprView.getImportBtn().addActionListener(
 				new ActionListener() {
-
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
 						JFileChooser fileChooser = new JFileChooser();
 						fileChooser.addChoosableFileFilter(new FileFilter() {
-
 							@Override
 							public boolean accept(File f) {
 								// TODO Auto-generated method stub
@@ -48,7 +45,7 @@ public class GPRController {
 
 						if (returnVal == JFileChooser.APPROVE_OPTION) {
 							File file = fileChooser.getSelectedFile();
-							fileChoosen(file);
+							importPressed(file);
 						}
 					}
 				});
@@ -57,27 +54,67 @@ public class GPRController {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Player player = new Player();
-				player.play("E5s A5s C6s B5s E5s B5s D6s C6i E6i G#5i E6i | A5s E5s A5s C6s B5s E5s B5s D6s C6i A5i Ri");
+				playPressed();
 
 			}
 		});
 
+		Singleton.gprView.getConnectBtn().addActionListener(
+				new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						connectPressed();
+					}
+				});
+
+		Singleton.gprView.getKeyboardBtn().addActionListener(
+				new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						keyboardPressed();
+					}
+				});
+		Singleton.gprView.getInfoBtn().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				infoPressed();
+			}
+		});
 	}
 
-	protected void fileChoosen(File zippedFile) {
+	/**
+	 * Klavye modu açýlýp kapanmasýný saðlayan butona basýlýp basýlmadýðýný
+	 * gösterir
+	 */
+	protected void keyboardPressed() {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * Program ve iþlevi hakkýnda bilgilendirme yapan paneli açar
+	 * 
+	 */
+	protected void infoPressed() {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * MXL dosyasý import edildiðinde çaðýrýlýr. Ziplenmiþ dosya unziplenir
+	 * 
+	 * @param zippedFile
+	 */
+	protected void importPressed(File zippedFile) {
 		try {
 			ZipFile file = new ZipFile(zippedFile);
 			file.extractAll(unzipDir);
 			System.out.println(file.getFile());
 		} catch (ZipException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Singleton.gprView.setProgres(10);
 		Singleton.gprView.setStatus("mxl File unzipped");
-
-
 
 		for (final File fileEntry : new File(unzipDir).listFiles()) {
 
@@ -87,9 +124,21 @@ public class GPRController {
 
 	}
 
-	private Sequencer sequencer;
-	private MusicStringParser parser;
-	private MidiRenderer renderer;
+	protected void playPressed() {
+		Player player = new Player();
+		player.play("E5s A5s C6s B5s E5s B5s D6s C6i E6i G#5i E6i | A5s E5s A5s C6s B5s E5s B5s D6s C6i A5i Ri");
+
+	}
+
+	/**
+	 * Arduino ile baðlantýnýn kurulmasýný saðlar. Baðlantý kurulduysa buton
+	 * pasif hale geçer.
+	 * 
+	 */
+	protected void connectPressed() {
+		// TODO Auto-generated method stub
+
+	}
 
 	// New XML Parser
 	private void parseXml(File fileEntry) {
@@ -111,7 +160,6 @@ public class GPRController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 
 		// Player player = new Player();
 		// player.play(pattern);

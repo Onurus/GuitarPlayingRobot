@@ -9,18 +9,18 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JToolBar;
 import javax.swing.border.EmptyBorder;
 
 public class GPRView extends JFrame {
 
+	private JButton connectBtn;
 	private JButton importBtn;
 	private JButton playBtn;
+	private JButton keyboardBtn;
 	private JButton infoBtn;
-	private JButton deleteBtn;
-	private JButton exitBtn;
+
 	private JLabel statusbar;
 	private JProgressBar jProgressBar;
 	private JToolBar vertical;
@@ -28,9 +28,10 @@ public class GPRView extends JFrame {
 	private void addVerticalButton(JButton... btnList) {
 		for (int i = 0; i < btnList.length; i++) {
 			JButton btn = btnList[i];
+			btn.setSize(50, 50);
 			btn.setBorder(new EmptyBorder(4, 4, 4, 4));
 
-			btn.setSize(50, 50);
+
 			vertical.add(btn);
 		}
 	}
@@ -41,17 +42,18 @@ public class GPRView extends JFrame {
 		vertical.setFloatable(false);
 		vertical.setMargin(new Insets(20, 5, 5, 5));
 
-		exitBtn = new JButton(new ImageIcon("img/shutdown-64.png"));
+		connectBtn = new JButton(new ImageIcon("img/arduino.png"));
 		importBtn = new JButton(new ImageIcon("img/audio_file-64.png"));
 		playBtn = new JButton(new ImageIcon("img/play-64.png"));
+		keyboardBtn = new JButton(new ImageIcon("img/keyboard.png"));
 		infoBtn = new JButton(new ImageIcon("img/info-64.png"));
-		deleteBtn = new JButton(new ImageIcon("img/delete-64.png"));
 
-		addVerticalButton(infoBtn, importBtn, playBtn, deleteBtn, exitBtn);
 
-		add(vertical, BorderLayout.EAST);
+		addVerticalButton(connectBtn, importBtn, playBtn, keyboardBtn, infoBtn);
 
-		add(new JPanel(), BorderLayout.CENTER);
+		add(vertical, BorderLayout.CENTER);
+
+		// add(new JPanel(), BorderLayout.CENTER);
 
 
 		statusbar = new JLabel("STATUSBAR");
@@ -74,6 +76,8 @@ public class GPRView extends JFrame {
 		setSize(700, 500);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+		setVisible(true);
 
 	}
 
@@ -110,19 +114,20 @@ public class GPRView extends JFrame {
 		this.infoBtn = infoBtn;
 	}
 
-	public JButton getDeleteBtn() {
-		return deleteBtn;
+	public JButton getConnectBtn() {
+		return connectBtn;
 	}
 
-	public void setDeleteBtn(JButton deleteBtn) {
-		this.deleteBtn = deleteBtn;
+	public void setConnectBtn(JButton connectBtn) {
+		this.connectBtn = connectBtn;
 	}
 
-	public JButton getExitBtn() {
-		return exitBtn;
+	public JButton getKeyboardBtn() {
+		return keyboardBtn;
 	}
 
-	public void setExitBtn(JButton exitBtn) {
-		this.exitBtn = exitBtn;
+	public void setKeyboardBtn(JButton keyboardBtn) {
+		this.keyboardBtn = keyboardBtn;
 	}
+
 }
