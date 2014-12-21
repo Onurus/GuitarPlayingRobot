@@ -14,7 +14,7 @@ public class XMLParser {
 
 
 		File file = new File(
-				"I:\\RoboticJava\\MusicXmlParserWithGui\\unzippedXml\\lg-616508990419757822.xml");
+				"I:\\RoboticJava\\GuitarPlayingRobot\\MusicXmlParserWithGui\\unzippedXml\\lg-616508990419757822.xml");
 
 		// new XMLParser().parseXml(file);
 		testMusicXmlParser(file);
