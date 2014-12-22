@@ -11,8 +11,8 @@ import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 
 import org.jfugue.Pattern;
-import org.jfugue.Player;
 
+import usta.onur.ceng599.model.GPRStates;
 import usta.onur.ceng599.starter.Singleton;
 
 public class GPRController {
@@ -87,7 +87,7 @@ public class GPRController {
 	 * gösterir
 	 */
 	protected void keyboardPressed() {
-		// TODO Auto-generated method stub
+		Singleton.gprKeyboard.setVisible(!Singleton.gprKeyboard.isVisible());
 
 	}
 
@@ -125,8 +125,29 @@ public class GPRController {
 	}
 
 	protected void playPressed() {
-		Player player = new Player();
-		player.play("E5s A5s C6s B5s E5s B5s D6s C6i E6i G#5i E6i | A5s E5s A5s C6s B5s E5s B5s D6s C6i A5i Ri");
+
+		if (Singleton.gprRenderer.getPlayingStatus() == GPRStates.Playing) {
+			pause();
+			Singleton.gprRenderer.setPlayingStatus(GPRStates.Paused);
+		} else {
+			play();
+			Singleton.gprRenderer.setPlayingStatus(GPRStates.Playing);
+		}
+
+		
+
+		// Player player = new Player();
+		// player.play("E5s A5s C6s B5s E5s B5s D6s C6i E6i G#5i E6i | A5s E5s A5s C6s B5s E5s B5s D6s C6i A5i Ri");
+
+	}
+
+	private void pause() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void play() {
+		// TODO Auto-generated method stub
 
 	}
 

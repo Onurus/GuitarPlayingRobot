@@ -4,7 +4,7 @@ import usta.onur.ceng599.model.GPRStates;
 
 
 public class GPRRenderer {
-	private  GPRStates mxlFile;
+	private GPRStates mxlFile;
 	private GPRStates connect;
 	private GPRStates playingStatus;
 	private GPRStates keybordStatus;
@@ -38,5 +38,21 @@ public class GPRRenderer {
 
 	private void renderAgain() {
 
+	}
+
+	public GPRStates getMxlFile() {
+		return mxlFile;
+	}
+
+	public GPRStates getConnect() {
+		return connect;
+	}
+
+	public GPRStates getPlayingStatus() {
+		return playingStatus;
+	}
+
+	public GPRStates getKeybordStatus() {
+		return keybordStatus;
 	}
 }

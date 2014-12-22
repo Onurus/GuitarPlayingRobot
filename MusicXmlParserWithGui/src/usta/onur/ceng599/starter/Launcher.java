@@ -11,7 +11,6 @@ public class Launcher {
 			@Override
 			public void run() {
 				Singleton.initialize();
-
 			}
 		});
 
