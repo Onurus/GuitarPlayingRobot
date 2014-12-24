@@ -15,7 +15,6 @@ public class KeyboardListener implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-
 		Singleton.gprKeyboard.drawRectangle(e.getKeyChar());
 	}
 

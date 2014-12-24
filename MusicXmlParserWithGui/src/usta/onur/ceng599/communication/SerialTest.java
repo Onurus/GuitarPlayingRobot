@@ -21,6 +21,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
 
+/**
+ * Sample code
+ * 
+ * @author Onurus
+ *
+ */
+
 public class SerialTest implements SerialPortEventListener {
 	SerialPort serialPort;
 	/** The port we're normally going to use. */
@@ -111,25 +118,4 @@ public class SerialTest implements SerialPortEventListener {
 		}
 	}
 
-	public static void main(String[] args) throws Exception {
-
-		final SerialTest com4Port = new SerialTest();
-		com4Port.initialize();
-
-		int b = 0;
-		byte[] bytes = { 0, 30, 60, 90, 120, 0, 30, 60, 90, 120, 0, 30, 60, 90,
-				120, 0, 30, 60, 90, 120 };
-
-		try {
-			Thread.sleep(2000L);
-			// b += 30;
-			// b = b % 180;
-
-			com4Port.output.write(bytes);
-			b++;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
 }

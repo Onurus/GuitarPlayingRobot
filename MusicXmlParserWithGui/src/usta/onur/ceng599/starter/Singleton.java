@@ -1,5 +1,6 @@
 package usta.onur.ceng599.starter;
 
+import usta.onur.ceng599.communication.ArduinoSerialConnector;
 import usta.onur.ceng599.controller.GPRController;
 import usta.onur.ceng599.controller.KeyboardListener;
 import usta.onur.ceng599.view.GPRRenderer;
@@ -12,6 +13,7 @@ public class Singleton {
 	public static GPRRenderer gprRenderer;
 	public static GPRSimulator gprKeyboard;
 	public static KeyboardListener keyboardListener;
+	public static ArduinoSerialConnector arduinoSerialConnector;
 	public static void initialize() {
 		gprView = new GPRView();
 		gprController = new GPRController();
@@ -21,5 +23,6 @@ public class Singleton {
 		gprKeyboard = new GPRSimulator("Keyboard");
 		keyboardListener = new KeyboardListener();
 		keyboardListener.initialize();
+		arduinoSerialConnector = new ArduinoSerialConnector();
 	}
 }

@@ -10,7 +10,6 @@ import javax.swing.JLabel;
 
 public class GPRSimulator extends JFrame {
 
-
 	HashMap<String, Integer> hashMap;
 	
 	public GPRSimulator(String arg0) throws HeadlessException {
@@ -46,4 +45,6 @@ public class GPRSimulator extends JFrame {
 		System.out.println(hashMap.keySet());
 
 	}
+
+
 }

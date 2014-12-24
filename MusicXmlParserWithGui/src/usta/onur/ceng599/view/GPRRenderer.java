@@ -1,6 +1,7 @@
 package usta.onur.ceng599.view;
 
 import usta.onur.ceng599.model.GPRStates;
+import usta.onur.ceng599.starter.Singleton;
 
 
 public class GPRRenderer {
@@ -23,7 +24,13 @@ public class GPRRenderer {
 
 	public void setConnect(GPRStates connect) {
 		this.connect = connect;
-		renderAgain();
+		if (this.connect == GPRStates.Connected) {
+			Singleton.gprView.setStatus("Connected :)");
+			Singleton.gprView.setProgres(100);
+		} else {
+			Singleton.gprView.setStatus("Failed !");
+		}
+		Singleton.gprView.getConnectBtn().setEnabled(true);
 	}
 
 	public void setPlayingStatus(GPRStates playingStatus) {

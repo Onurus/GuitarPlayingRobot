@@ -88,7 +88,6 @@ public class GPRController {
 	 */
 	protected void keyboardPressed() {
 		Singleton.gprKeyboard.setVisible(!Singleton.gprKeyboard.isVisible());
-
 	}
 
 	/**
@@ -157,8 +156,12 @@ public class GPRController {
 	 * 
 	 */
 	protected void connectPressed() {
-		// TODO Auto-generated method stub
-
+		Singleton.gprView.getConnectBtn().setEnabled(false);
+		if (Singleton.arduinoSerialConnector.connect()) {
+			Singleton.gprRenderer.setConnect(GPRStates.Connected);
+		} else {
+			Singleton.gprRenderer.setConnect(GPRStates.Not_Connected);
+		}
 	}
 
 	// New XML Parser
