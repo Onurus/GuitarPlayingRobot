@@ -1,5 +1,8 @@
 package usta.onur.ceng599.converter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jfugue.ChannelPressure;
 import org.jfugue.Controller;
 import org.jfugue.Instrument;
@@ -14,87 +17,98 @@ import org.jfugue.Tempo;
 import org.jfugue.Time;
 import org.jfugue.Voice;
 
-public class OnurXmlParserListener implements ParserListener {
+import usta.onur.ceng599.model.GPRNote;
+
+public class GPRXmlParserListener implements ParserListener {
+
+	public List<GPRNote> liste;
+	public int smallestDuration;
+
+	public GPRXmlParserListener() {
+		super();
+		this.liste = new ArrayList<GPRNote>();
+		smallestDuration = 999999;
+	}
 
 	@Override
 	public void voiceEvent(Voice voice) {
-		System.out.println("voice.getVoice() : " + voice.getVoice());
 	}
 
 	@Override
 	public void tempoEvent(Tempo tempo) {
-		System.out.println("tempo.getTempo() : " + tempo.getTempo());
 	}
 
 	@Override
 	public void instrumentEvent(Instrument instrument) {
-		System.out.println("instrument.getInstrumentName() : "
-				+ instrument.getInstrumentName());
 
 	}
 
 	@Override
 	public void layerEvent(Layer layer) {
-		System.out.println("layer.getLayer() : " + layer.getLayer());
-
 	}
 
 	@Override
 	public void measureEvent(Measure measure) {
-		System.out.println("measure:" + measure);
 
 	}
 
 	@Override
 	public void timeEvent(Time time) {
-		System.out.println("time:" + time);
 	}
 
 	@Override
 	public void keySignatureEvent(KeySignature keySig) {
-		System.out.println("keySig:" + keySig.getKeySig());
+		// System.out.println("keySig:" + keySig.getKeySig());
 
 	}
 
 	@Override
 	public void controllerEvent(Controller controller) {
-		System.out.println("controller:" + controller);
 
 	}
 
 	@Override
 	public void channelPressureEvent(ChannelPressure channelPressure) {
-		System.out.println("channelPressure:" + channelPressure);
 
 	}
 
 	@Override
 	public void polyphonicPressureEvent(PolyphonicPressure polyphonicPressure) {
-		System.out.println("polyphonicPressure:" + polyphonicPressure);
 
 	}
 
 	@Override
 	public void pitchBendEvent(PitchBend pitchBend) {
-		System.out.println("pitchBend:" + pitchBend);
 
 	}
 
 	@Override
 	public void noteEvent(Note note) {
-		System.out.println("note : " + note.getValue() + " duration:"
-				+ note.getDuration() + " : " + note.getMusicString());
+		addToList(new GPRNote(note.getValue(), Integer.parseInt(note
+				.getDuration() + "")));
 
+
+	}
+
+	private void addToList(GPRNote gprNote) {
+		liste.add(gprNote);
+		if (gprNote.getDuration() < smallestDuration) {
+			smallestDuration = gprNote.getDuration();
+		}
 	}
 
 	@Override
 	public void sequentialNoteEvent(Note note) {
 		System.out.println("sequentialNoteEvent");
+		System.out.println("note : " + note.getValue() + " duration:"
+				+ note.getDuration() + " : " + note.getMusicString());
 	}
 
 	@Override
 	public void parallelNoteEvent(Note note) {
 		System.out.println("parallelNoteEvent");
+		System.out.println("note : " + note.getValue() + " duration:"
+				+ note.getDuration() + " : " + note.getMusicString());
 	}
 
 }

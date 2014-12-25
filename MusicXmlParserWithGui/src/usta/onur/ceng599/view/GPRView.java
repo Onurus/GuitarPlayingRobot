@@ -83,7 +83,6 @@ public class GPRView extends JFrame {
 
 	public void setStatus(String txt) {
 		this.statusbar.setText(txt);
-
 	}
 
 	public void setProgres(int value) {

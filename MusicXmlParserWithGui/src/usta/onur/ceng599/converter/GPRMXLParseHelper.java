@@ -7,21 +7,9 @@ import java.nio.channels.FileChannel;
 
 import org.jfugue.MusicXmlParser;
 
-public class XMLParser {
-
-
-	public static void main(String[] args) {
-
-
-		File file = new File(
-				"I:\\RoboticJava\\GuitarPlayingRobot\\MusicXmlParserWithGui\\unzippedXml\\lg-616508990419757822.xml");
-
-		// new XMLParser().parseXml(file);
-		testMusicXmlParser(file);
-	}
-
-	private static void testMusicXmlParser(File fileXML) {
-
+public class GPRMXLParseHelper {
+	public static GPRXmlParserListener getParsListener(File fileXML) {
+		GPRXmlParserListener onurXmlParserListener = null;
 		try {
 			FileInputStream fisXML = new FileInputStream(fileXML);
 			FileChannel fc = fisXML.getChannel();
@@ -29,19 +17,13 @@ public class XMLParser {
 			fc.read(buf);
 			buf.flip();
 			MusicXmlParser MusicXMLIn = new MusicXmlParser();
-			OnurXmlParserListener onurXmlParserListener = new OnurXmlParserListener();
+			onurXmlParserListener = new GPRXmlParserListener();
 			MusicXMLIn.addParserListener(onurXmlParserListener);
-
 			MusicXMLIn.parse(fileXML);
-
-			// Playing...
-
-
-
+			fisXML.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return onurXmlParserListener;
 	}
-
-
 }

@@ -14,6 +14,7 @@ public class Singleton {
 	public static GPRSimulator gprKeyboard;
 	public static KeyboardListener keyboardListener;
 	public static ArduinoSerialConnector arduinoSerialConnector;
+
 	public static void initialize() {
 		gprView = new GPRView();
 		gprController = new GPRController();

@@ -9,17 +9,17 @@ import javax.swing.filechooser.FileFilter;
 
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
-
-import org.jfugue.Pattern;
-
+import usta.onur.ceng599.converter.GPRMXLParseHelper;
+import usta.onur.ceng599.converter.GPRXmlParserListener;
 import usta.onur.ceng599.model.GPRStates;
 import usta.onur.ceng599.starter.Singleton;
 
 public class GPRController {
 
 	static String unzipDir = "./unzippedXml";
-
+	private GPRXmlParserListener onurXmlParserListener;
 	public void initialize() {
+		onurXmlParserListener = null;
 		Singleton.gprView.getImportBtn().addActionListener(
 				new ActionListener() {
 					@Override
@@ -28,7 +28,6 @@ public class GPRController {
 						fileChooser.addChoosableFileFilter(new FileFilter() {
 							@Override
 							public boolean accept(File f) {
-								// TODO Auto-generated method stub
 								return f.getName().endsWith(".mxl")
 										|| f.isDirectory();
 							}
@@ -105,18 +104,20 @@ public class GPRController {
 	 * @param zippedFile
 	 */
 	protected void importPressed(File zippedFile) {
+
+		for (final File fileDelete : new File(unzipDir).listFiles()) {
+			fileDelete.delete();
+		}
 		try {
 			ZipFile file = new ZipFile(zippedFile);
 			file.extractAll(unzipDir);
-			System.out.println(file.getFile());
 		} catch (ZipException e) {
 			e.printStackTrace();
 		}
-		Singleton.gprView.setProgres(10);
+		Singleton.gprView.setProgres(23);
 		Singleton.gprView.setStatus("mxl File unzipped");
 
 		for (final File fileEntry : new File(unzipDir).listFiles()) {
-
 			if (fileEntry.getName().endsWith(".xml"))
 				parseXml(fileEntry);
 		}
@@ -132,12 +133,6 @@ public class GPRController {
 			play();
 			Singleton.gprRenderer.setPlayingStatus(GPRStates.Playing);
 		}
-
-		
-
-		// Player player = new Player();
-		// player.play("E5s A5s C6s B5s E5s B5s D6s C6i E6i G#5i E6i | A5s E5s A5s C6s B5s E5s B5s D6s C6i A5i Ri");
-
 	}
 
 	private void pause() {
@@ -146,7 +141,8 @@ public class GPRController {
 	}
 
 	private void play() {
-		// TODO Auto-generated method stub
+		new GPRPlayerThread(onurXmlParserListener.smallestDuration,
+				onurXmlParserListener.liste).start();
 
 	}
 
@@ -164,30 +160,18 @@ public class GPRController {
 		}
 	}
 
+
 	// New XML Parser
 	private void parseXml(File fileEntry) {
+		onurXmlParserListener = GPRMXLParseHelper.getParsListener(fileEntry);
+		Singleton.gprView.setProgres(100);
+		Singleton.gprView.setStatus("Parsed - Rendered - Ready to Play");
+		Singleton.gprRenderer.setMxlFile(GPRStates.Imported);
 
-		Pattern pattern = null;
-		try {
-			pattern = MusicXMLFileHelper.read(fileEntry);
-
-			String[] list = pattern.getTokens();
-			for (int i = 0; i < list.length; i++) {
-				System.out.println(i + " : " + list[i]);
-			}
-			// System.out.println(pattern.getMusicString());
-			// this.renderer.reset();
-			// this.parser.parse(pattern);
-			// Sequence sequence = this.renderer.getSequence();
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		// Player player = new Player();
-		// player.play(pattern);
-
+		System.out
+				.println("liste.size():" + onurXmlParserListener.liste.size());
+		System.out.println("smallestDuration:"
+				+ onurXmlParserListener.smallestDuration);
 	}
 
 }

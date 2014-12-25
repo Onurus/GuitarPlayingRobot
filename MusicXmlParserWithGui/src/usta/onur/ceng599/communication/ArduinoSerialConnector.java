@@ -18,13 +18,12 @@ import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
 
 public class ArduinoSerialConnector implements SerialPortEventListener {
-	SerialPort serialPort;
-	private InputStream input;
+	private SerialPort serialPort;
+	// private InputStream input;
 	private OutputStream output;
 	private static final int TIME_OUT = 1000;
 	private static final int DATA_RATE = 9600;
@@ -52,7 +51,7 @@ public class ArduinoSerialConnector implements SerialPortEventListener {
 			serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_NONE);
 			serialPort.setSerialPortParams(DATA_RATE, SerialPort.DATABITS_8,
 					SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-			input = serialPort.getInputStream();
+			// input = serialPort.getInputStream();
 			output = serialPort.getOutputStream();
 			serialPort.addEventListener(this);
 			serialPort.notifyOnDataAvailable(true);
