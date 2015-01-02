@@ -2,12 +2,15 @@ package usta.onur.ceng599.controller;
 
 import java.util.List;
 
+import usta.onur.ceng599.converter.MusicalConverter;
+import usta.onur.ceng599.model.GPRCommand;
 import usta.onur.ceng599.model.GPRNote;
+import usta.onur.ceng599.model.GuitarPosition;
 import usta.onur.ceng599.starter.Singleton;
 
 public class GPRPlayerThread extends Thread implements Runnable {
 
-	static final int moveTimeMilisecond = 300;
+	static final int moveTimeMilisecond = 600;
 	private double durationCoefficient = 5;
 	private List<GPRNote> noteList;
 	private int index;
@@ -17,6 +20,7 @@ public class GPRPlayerThread extends Thread implements Runnable {
 	public GPRPlayerThread(int shortestDuration, List<GPRNote> list) {
 		super();
 		this.durationCoefficient = moveTimeMilisecond / shortestDuration;
+		System.out.println(durationCoefficient);
 		this.noteList = list;
 		isPlaying = false;
 		index = 0;
@@ -31,11 +35,8 @@ public class GPRPlayerThread extends Thread implements Runnable {
 			while (true) {
 				if (length > index) {
 					GPRNote node = noteList.get(index);
-					// TODO STUB
-					System.out.println(node.getValue());
+					playNote(node);
 					Singleton.gprView.setProgres((index * 100) / length);
-
-					sleep((long) (node.getDuration() * durationCoefficient));
 					index++;
 				} else {
 					break;
@@ -47,4 +48,28 @@ public class GPRPlayerThread extends Thread implements Runnable {
 
 	}
 
+	private void playNote(GPRNote node) throws InterruptedException {
+		long totalDuration = (long) (node.getDuration() * durationCoefficient);
+		
+		List<GuitarPosition> possiblePositions = MusicalConverter
+				.convertNoteToListOfPossiblePositions(node);
+		if (possiblePositions.size() > 0) {
+			GuitarPosition guitarPosition = possiblePositions.get(0);
+			sleep(totalDuration / 10);
+			send(MusicalConverter.convertGoPosition(guitarPosition));
+			sleep(totalDuration / 10);
+			send(MusicalConverter.convertPushPosition(guitarPosition));
+			sleep(totalDuration * 2 / 10);
+			send(MusicalConverter.convertTouchPosition(guitarPosition));
+			sleep(totalDuration * 5 / 10);
+			send(MusicalConverter.convertPullPosition(guitarPosition));
+			sleep(totalDuration / 10);
+		} else {
+			System.err.println("Nota bulunamadý");
+		}
+	}
+
+	private void send(GPRCommand command) {
+		Singleton.arduinoSerialConnector.write(command.getValue());
+	}
 }

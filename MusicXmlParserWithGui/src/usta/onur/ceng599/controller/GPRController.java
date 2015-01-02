@@ -141,8 +141,12 @@ public class GPRController {
 	}
 
 	private void play() {
-		new GPRPlayerThread(onurXmlParserListener.smallestDuration,
-				onurXmlParserListener.liste).start();
+		if (onurXmlParserListener == null) {
+			Singleton.gprView.setStatus("Song haven't been load!");
+		} else {
+			new GPRPlayerThread(onurXmlParserListener.smallestDuration,
+					onurXmlParserListener.liste).start();
+		}
 
 	}
 
