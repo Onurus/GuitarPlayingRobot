@@ -10,7 +10,7 @@ import usta.onur.ceng599.starter.Singleton;
 
 public class GPRPlayerThread extends Thread implements Runnable {
 
-	static final int moveTimeMilisecond = 600;
+	static final int moveTimeMilisecond = 300;
 	private double durationCoefficient = 5;
 	private List<GPRNote> noteList;
 	private int index;
