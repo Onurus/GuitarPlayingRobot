@@ -10,7 +10,7 @@ int servo3push3=135;
 int servo3push4=45;
 
 int servo4touch0=0;
-int servo4touch1=5;
+int servo4touch1=50;
 
 int servo5pull0=90;
 int servo5push1=135;
@@ -45,7 +45,6 @@ void setup()
   servo6.attach(6); //6
   servo7.attach(7); //7
 
-
   touch1=true;
   touch2=true;
 } 
@@ -56,19 +55,6 @@ void loop()
    if (Serial.available() > 0) {
      comingCommand(Serial.read());    
    }
-  /* 
-   int a=0;
-   while(true){
-   
-    if(a%2==1){
-      servo4.write(5);
-    }else{
-      servo4.write(15);
-    }  
-    
-     a=a+1 ;
-    delay(100); 
- }*/
 }
 
 void comingCommand(int command){

@@ -5,7 +5,7 @@ import java.util.List;
 import usta.onur.ceng599.converter.MusicalConverter;
 import usta.onur.ceng599.model.GPRCommand;
 import usta.onur.ceng599.model.GPRNote;
-import usta.onur.ceng599.model.GuitarPosition;
+import usta.onur.ceng599.model.NoteCommand;
 import usta.onur.ceng599.starter.Singleton;
 
 public class GPRPlayerThread extends Thread implements Runnable {
@@ -51,22 +51,16 @@ public class GPRPlayerThread extends Thread implements Runnable {
 	private void playNote(GPRNote node) throws InterruptedException {
 		long totalDuration = (long) (node.getDuration() * durationCoefficient);
 		
-		List<GuitarPosition> possiblePositions = MusicalConverter
-				.convertNoteToListOfPossiblePositions(node);
-		if (possiblePositions.size() > 0) {
-			GuitarPosition guitarPosition = possiblePositions.get(0);
-			sleep(totalDuration / 10);
-			send(MusicalConverter.convertGoPosition(guitarPosition));
-			sleep(totalDuration / 10);
-			send(MusicalConverter.convertPushPosition(guitarPosition));
-			sleep(totalDuration * 2 / 10);
-			send(MusicalConverter.convertTouchPosition(guitarPosition));
-			sleep(totalDuration * 5 / 10);
-			send(MusicalConverter.convertPullPosition(guitarPosition));
-			sleep(totalDuration / 10);
-		} else {
-			System.err.println("Nota bulunamadý");
+		NoteCommand noteCommand = MusicalConverter.noteToPressAndTouchCommand(node);
+		if(noteCommand !=null){
+			send(noteCommand.press);
+			sleep(totalDuration/5);
+			send(noteCommand.touch);
+			sleep(totalDuration);
+		}else {
+			System.err.println("Bulunan nota uygun deðil");
 		}
+
 	}
 
 	private void send(GPRCommand command) {
