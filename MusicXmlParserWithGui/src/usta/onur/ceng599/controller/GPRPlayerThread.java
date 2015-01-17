@@ -53,9 +53,12 @@ public class GPRPlayerThread extends Thread implements Runnable {
 		
 		NoteCommand noteCommand = MusicalConverter.noteToPressAndTouchCommand(node);
 		if(noteCommand !=null){
+			System.out.println("noteCommand.press: " + noteCommand.press);
 			send(noteCommand.press);
 			sleep(totalDuration/5);
+			System.out.println("noteCommand.touch: " + noteCommand.touch);
 			send(noteCommand.touch);
+			System.out.println("totalDuration :" + totalDuration);
 			sleep(totalDuration);
 		}else {
 			System.err.println("Bulunan nota uygun deðil");

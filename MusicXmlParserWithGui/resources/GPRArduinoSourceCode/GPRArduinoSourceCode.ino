@@ -1,27 +1,27 @@
  #include <Servo.h> 
 
 //////////////////// STATIC DEFINITIONS////////
-int servo2pull0=90;
-int servo2push1=135;
-int servo2push2=45;
+int servo2pull0=80;
+int servo2push1=50;
+int servo2push2=112;
 
-int servo3pull0=90;
-int servo3push3=135;
-int servo3push4=45;
+int servo3pull0=80;
+int servo3push3=45;
+int servo3push4=110;
 
-int servo4touch0=0;
-int servo4touch1=5;
+int servo4touch0=70;
+int servo4touch1=100;
 
 int servo5pull0=90;
-int servo5push1=135;
-int servo5push2=45;
+int servo5push1=150;
+int servo5push2=30;
 
 int servo6pull0=90;
-int servo6push3=135;
-int servo6push4=45;
+int servo6push3=138;
+int servo6push4=32;
 
-int servo7touch0=0;
-int servo7touch1=50;
+int servo7touch0=110;
+int servo7touch1=130;
 //////////////////////////////////////////////
 
 Servo servo2; //2
@@ -44,8 +44,16 @@ void setup()
   servo5.attach(5); //5
   servo6.attach(6); //6
   servo7.attach(7); //7
-
-
+  
+  
+  servo2.write(servo2pull0);
+  servo3.write(servo3pull0);
+  servo4.write(servo4touch1);
+  
+  servo5.write(servo5pull0);
+  servo6.write(servo6pull0);
+  servo7.write(servo7touch1);
+  
   touch1=true;
   touch2=true;
 } 
@@ -53,45 +61,45 @@ void setup()
 
 void loop() 
 { 
+  
+
    if (Serial.available() > 0) {
      comingCommand(Serial.read());    
    }
-  /* 
-   int a=0;
-   while(true){
-   
-    if(a%2==1){
-      servo4.write(5);
-    }else{
-      servo4.write(15);
-    }  
-    
-     a=a+1 ;
-    delay(100); 
- }*/
 }
 
 void comingCommand(int command){
   switch(command){
         case 10:
-        servo2.write(servo2pull0);
-        servo3.write(servo3pull0);
+          servo2.write(servo2pull0);
+          servo3.write(servo3pull0);
+          servo5.write(servo5pull0);
+          servo6.write(servo6pull0);
+
     break;
         case 11:
-        servo2.write(servo2push1);
-        servo3.write(servo3pull0);
+          servo3.write(servo3pull0);
+          servo5.write(servo5pull0);
+          servo6.write(servo6pull0);
+          servo2.write(servo2push1); 
     break;
         case 12:
-        servo2.write(servo2push2);
-        servo3.write(servo3pull0);
+          servo3.write(servo3pull0);
+          servo5.write(servo5pull0);
+          servo6.write(servo6pull0);
+          servo2.write(servo2push2);
     break;
         case 13:
-        servo2.write(servo2pull0);
-        servo3.write(servo3push3);
+          servo2.write(servo2pull0);
+          servo5.write(servo5pull0);
+          servo6.write(servo6pull0);
+          servo3.write(servo3push3);
     break;
         case 14:
-        servo2.write(servo2pull0);
-        servo3.write(servo3push4);
+          servo2.write(servo2pull0);
+          servo5.write(servo5pull0);
+          servo6.write(servo6pull0);
+          servo3.write(servo3push4);
     break;
         case 71:
         if(touch1){
@@ -102,24 +110,34 @@ void comingCommand(int command){
         touch1=!touch1;
     break;
         case 20:
-        servo5.write(servo5pull0);
-        servo6.write(servo6pull0);
+          servo2.write(servo2pull0);
+          servo3.write(servo3pull0);
+          servo5.write(servo5pull0);
+          servo6.write(servo6pull0);;
     break;
         case 21:
-        servo5.write(servo5push1);
-        servo6.write(servo6pull0);
+          servo2.write(servo2pull0);
+          servo3.write(servo3pull0);
+          servo6.write(servo6pull0);
+          servo5.write(servo5push1);
     break;
         case 22:
-        servo5.write(servo5push2);
-        servo6.write(servo6pull0);
+          servo2.write(servo2pull0);
+          servo3.write(servo3pull0);
+          servo6.write(servo6pull0);
+          servo5.write(servo5push2);
     break;
         case 23:
-        servo5.write(servo5pull0);
-        servo6.write(servo6push3);
+          servo2.write(servo2pull0);
+          servo3.write(servo3pull0);
+          servo5.write(servo5pull0);
+          servo6.write(servo6push3);
     break;
         case 24:
-        servo5.write(servo5pull0);
-        servo6.write(servo6push4);
+          servo2.write(servo2pull0);
+          servo3.write(servo3pull0);
+          servo5.write(servo5pull0);
+          servo6.write(servo6push4);
     break;
         case 72:
         if(touch2){
