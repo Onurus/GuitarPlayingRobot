@@ -12,6 +12,7 @@ import net.lingala.zip4j.exception.ZipException;
 import usta.onur.ceng599.converter.GPRMXLParseHelper;
 import usta.onur.ceng599.converter.GPRXmlParserListener;
 import usta.onur.ceng599.model.GPRStates;
+import usta.onur.ceng599.model.StaticSongs;
 import usta.onur.ceng599.starter.Singleton;
 
 public class GPRController {
@@ -93,8 +94,41 @@ public class GPRController {
 	 * Program ve iþlevi hakkýnda bilgilendirme yapan paneli açar
 	 * 
 	 */
+
+	int infoPressed = 0;
 	protected void infoPressed() {
-		// TODO Auto-generated method stub
+		infoPressed++;
+
+		onurXmlParserListener = new GPRXmlParserListener();
+		if (infoPressed % 4 == 1) {
+			onurXmlParserListener.liste = StaticSongs.nirvana();
+			onurXmlParserListener.setSmallestDuration();
+			Singleton.gprView.setProgres(100);
+			Singleton.gprView.setStatus("Nirvana-Come As You Are");
+
+		}
+		if (infoPressed % 4 == 2) {
+			onurXmlParserListener.liste = StaticSongs.saw();
+			onurXmlParserListener.setSmallestDuration();
+			Singleton.gprView.setProgres(100);
+			Singleton.gprView.setStatus("SAW MOVIE SOUND BASIC");
+
+		}
+		if (infoPressed % 4 == 3) {
+			onurXmlParserListener.liste = StaticSongs.masal();
+			onurXmlParserListener.setSmallestDuration();
+			Singleton.gprView.setProgres(100);
+			Singleton.gprView.setStatus("Yeni Türlü - Masal");
+
+		}
+		if (infoPressed % 4 == 0) {
+			onurXmlParserListener.liste = StaticSongs.godfather();
+			onurXmlParserListener.setSmallestDuration();
+			Singleton.gprView.setProgres(100);
+			Singleton.gprView.setStatus("GODFATHER");
+
+		}
+		Singleton.gprRenderer.setMxlFile(GPRStates.Imported);
 
 	}
 

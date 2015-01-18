@@ -111,4 +111,12 @@ public class GPRXmlParserListener implements ParserListener {
 				+ note.getDuration() + " : " + note.getMusicString());
 	}
 
+	public void setSmallestDuration() {
+		for (GPRNote gprNote : liste) {
+			if (gprNote.getDuration() < smallestDuration) {
+				smallestDuration = gprNote.getDuration();
+			}
+		}
+	}
+
 }
